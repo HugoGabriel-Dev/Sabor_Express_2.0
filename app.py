@@ -1,19 +1,33 @@
 class Restaurante:
+
     restaurantes = []
+
     def __init__(self, nome, categoria):
-        self.nome = nome
-        self.categoria = categoria
-        self.ativo = False
+        self._nome = nome.title()
+        self._categoria = categoria.title()
+        self._ativo = False
         Restaurante.restaurantes.append(self)
 
     def __str__(self):
-        return f'Restaurante: {self.nome}, Categoria: {self.categoria}, Ativo: {self.ativo}'
+        return f'Restaurante: {self._nome}, Categoria: {self._categoria}, Ativo: {self.ativo}'
 
-    def listar_restaurantes():
-        for restaurante in Restaurante.restaurantes:
-            print(f'{restaurante.nome} | {restaurante.categoria} | {restaurante.ativo}')
+    @classmethod
+    def listar_restaurantes(cls):
+        print(f'{"NOME":<20} | {"CATEGORIA":<15} | {"ATIVO":<5}')
+        for restaurante in cls.restaurantes:
+            print(f'{restaurante._nome:<20} | {restaurante._categoria:<15} | {restaurante.ativo}')
+    
+    @property
+    def ativo(self):
+        return 'ativo'.title() if self._ativo else 'inativo'.title()
+    
+    def alternar_estado(self):
+        self._ativo = not self._ativo
 
-restaurante = Restaurante('Restaurante A', 'Italiana')
-restaurante2 = Restaurante('Restaurante B', 'Chinesa')
+praca = Restaurante('restaurante A', 'italiana')
+praca.alternar_estado()
+gourmet = Restaurante('restaurante B', 'chinesa')
 
 Restaurante.listar_restaurantes()
+
+
